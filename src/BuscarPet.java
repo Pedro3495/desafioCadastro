@@ -45,33 +45,21 @@
                     else if(campo.equalsIgnoreCase("peso")) valorComparacao = peso;
                     else if(campo.equalsIgnoreCase("raca")) valorComparacao = raca;
 
-                    if(campo.equalsIgnoreCase("data")){
+                    if(campo.equalsIgnoreCase("data")) {
                         String dataArquivo = arquivo.getName().split("-")[0];
 
-                        if(tipo.equalsIgnoreCase(tipoEscolhido) && dataArquivo.startsWith(criterio)){
+                        if (tipo.equalsIgnoreCase(tipoEscolhido) && dataArquivo.startsWith(criterio)) {
                             encontrou = true;
-
-
-                            String nomeExibicao = nome;
-                            String racaExibicao = raca;
-                            String enderecoExibicao = endereco;
-
-                            if (campo.equalsIgnoreCase("nome")) {
-                                nomeExibicao = destacarTermo(nome, criterio);
-                            } else if (campo.equalsIgnoreCase("raca")) {
-                                racaExibicao = destacarTermo(raca, criterio);
-                            } else if (campo.equalsIgnoreCase("endereco")) {
-                                enderecoExibicao = destacarTermo(endereco, criterio);
-                            }
                             int numeroResultado = resultados.size() + 1;
-
-                            System.out.println(numeroResultado + ". " + nomeExibicao + " - " + tipo + " - " + sexo + " - " + enderecoExibicao + " - " + idade + " - " + peso + " - " + racaExibicao);}
+                            System.out.println(formatarLinha(numeroResultado, campo, criterio, nome, tipo, sexo, endereco, idade, peso, raca));
                             resultados.add(arquivo);
+                        }
+
                     }else {
                         if (tipo.equalsIgnoreCase(tipoEscolhido) && valorComparacao.toLowerCase().contains(criterio.toLowerCase())) {
                             encontrou = true;
                             int numeroResultado = resultados.size() + 1;
-                            System.out.println(numeroResultado + ". "+nome + " - " + tipo + " - " + sexo + " - " + endereco + " - " + idade + " - " + peso + " - " + raca);
+                            System.out.println(formatarLinha(numeroResultado, campo, criterio, nome, tipo, sexo, endereco, idade, peso, raca));
                             resultados.add(arquivo);
                         }
                     }
@@ -101,6 +89,31 @@
             String meio = texto.substring(inicio,inicio + termo.length());
             String depois = texto.substring(inicio + termo.length());
             return antes + "**" + meio + "**" + depois;
+        }
+
+        private String formatarLinha(int numeroResultado, String campo, String criterio, String nome, String tipo, String sexo, String endereco, String idade, String peso, String raca) {
+            String nomeExibicao = nome;
+            String sexoExibicao = sexo;
+            String enderecoExibicao = endereco;
+            String idadeExibicao = idade;
+            String pesoExibicao = peso;
+            String racaExibicao = raca;
+
+            if (campo.equalsIgnoreCase("nome")) {
+                nomeExibicao = destacarTermo(nome, criterio);
+            } else if (campo.equalsIgnoreCase("sexo")) {
+                sexoExibicao = destacarTermo(sexo, criterio);
+            } else if (campo.equalsIgnoreCase("endereco")) {
+                enderecoExibicao = destacarTermo(endereco, criterio);
+            } else if (campo.equalsIgnoreCase("idade")) {
+                idadeExibicao = destacarTermo(idade, criterio);
+            } else if (campo.equalsIgnoreCase("peso")) {
+                pesoExibicao = destacarTermo(peso, criterio);
+            } else if (campo.equalsIgnoreCase("raca")) {
+                racaExibicao = destacarTermo(raca, criterio);
+            }
+
+            return numeroResultado + ". " + nomeExibicao + " - " + tipo + " - " + sexoExibicao + " - " + enderecoExibicao + " - " + idadeExibicao + " - " + pesoExibicao + " - " + racaExibicao;
         }
 
 
